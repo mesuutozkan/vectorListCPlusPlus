@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include <string>		//use if iostream does not contain string lib.
+
 using namespace std;
 
 #include <vector>
@@ -26,132 +28,97 @@ using namespace std;
 * But if you want to access fastly to an element, use vector.
 */
 
+class automobile
+{
+private:
+
+	string brand;
+	string model;
+	int year;
+
+public:
+
+	//add constructor with definition
+
+	automobile(string _brand, string _model, int _year)
+		: brand(_brand), model(_model), year(_year) {}
+
+	void printInformation() const		//use const to specify this method is read only for this class
+	{
+		cout << "Brand: " << brand << ", Model: " << model << ", Year: " << year << "; ";
+
+	}
+
+};
 
 int main()
 {
-	//define a vector for numbers.
+	//create a vector that holds automobile objects
 
-	vector<int> vNumbers;
+	vector<automobile> vGarage;
 
-	vNumbers.push_back(10);
-	vNumbers.push_back(20);
-	vNumbers.push_back(30);
+	cout << "Add automobiles to the garage...\n";
 
-	//vector size method: 3
+	vGarage.push_back(automobile("Toyota", "Corolla", 2020));
+	vGarage.push_back(automobile("Audi", "A5", 2012));
+	vGarage.push_back(automobile("Mercedes", "CLS350", 2016));
 
-	cout << "Vector size: " << vNumbers.size() << endl;
+	cout << "Automobiles in garage: " << endl;
 
-	//print vector elements
-
-	for (size_t i = 0; i < vNumbers.size(); i++)	//use unsigned int type: size_t to maximize the number of elements.(large datasets)
-	{
-		cout << "Element " << i << ": " << vNumbers[i] << endl;		//vNumbers[i] = vNumbers.at(i) 
+	for (const automobile& atmbl : vGarage)		//use const if printInformation method uses "const" keyword
+	{											//only for read only.
+		atmbl.printInformation();
 
 	}
 
-	//access an element
+	cout << endl;
+
+	//erase an object
+
+	vGarage.erase(vGarage.begin());
+
+	for (const automobile& atmbl : vGarage)		
+	{											
+		atmbl.printInformation();
+
+	}
+
+	cout << endl;
+
+	//add an object
+
+	vGarage.push_back(automobile("Toyota", "Supra", 1996));
+
+	for (const automobile& atmbl : vGarage)
+	{
+		atmbl.printInformation();
+
+	}
+
+	cout << endl;
+
+	//insert an object element
+
+	vGarage.insert(vGarage.begin() + 2, automobile("Honda", "Civic", 2025));
+
+	for (const automobile& atmbl : vGarage)
+	{
+		atmbl.printInformation();
+
+	}
+
+	cout << endl;
+
+	//access an object element and its method
+
+	vGarage.at(2).printInformation();
+
+	cout << endl;
+
+	//access an object element and its method
 	
-	cout << vNumbers[1] << endl;
-
-	//change an element
-
-	vNumbers.at(1) = 19;
-
-	vector<string> vCars = { "Audi", "Mercedes", "BMW" };
-
-	vCars.push_back("Volkswagen");
-
-	//instead of copying elements, use reference, to save memory and access directly to elements.
-
-	//use of "const" is for read only operation, not suitable for any change of any element.
-
-	// "string car : vCars" is for accessing to all of the vCars vector elements  
-
-	for (const string& car : vCars)
-	{
-		cout << car << " ";
+	vGarage.at(vGarage.size() - 3).printInformation();
 	
-	}
-	
-	cout << endl;
-
-	//insert an element between elements (position, element)
-
-	vNumbers.insert(vNumbers.begin() + 1, 15);
-
-	//print vNumbers
-
-	//fastest way for read only operation
-
-	for (const size_t &num : vNumbers)
-	{
-		cout << num << " ";
-	}
-
-	cout << endl;
-	
-	//fastest way to access and processing with reference (no copy) way 
-
-	for (int& num : vNumbers)
-	{
-		num = num + 1;
-
-		cout << num << " ";
-	}
-
-	cout << endl;
-
-	//erase last element
-
-	vNumbers.pop_back();
-
-	for (const size_t& num : vNumbers)
-	{
-		cout << num << " ";
-	}
-
-	cout << endl;
-
-	//erase a specific element with iterator (index) (dont forget, for vectors its a costs time)
-
-	vNumbers.erase(vNumbers.begin() + 1);
-
-	for (const size_t& num : vNumbers)
-	{
-		cout << num << " ";
-	}
-
-	cout << endl;
-
-	//clear vector (not allocated memory!)
-
-	vNumbers.clear();
-
-	cout << "Vector size: " << vNumbers.size() << endl;
-
-	//cleared elements' memory blocks remains
-
-	vNumbers.push_back(10);
-	vNumbers.push_back(20);
-
-	for (const size_t& num : vNumbers)
-	{
-		cout << num << " ";
-	}
-
-	cout << endl;
-
-	//initialize new vector with initial elements (size, element)
-
-	vector<int> myVector(3, 40);
-
-	for (const size_t& element : myVector)
-	{
-		cout << element << " ";
-	}
-
-	cout << endl;
-
 	return 0;
 }
 
